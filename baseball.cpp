@@ -19,21 +19,25 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
-		else {
-			int strike = 0;
-			int ball = 0;
-			if (guessNumber[0] == question[0]) strike++;
-			if (guessNumber[1] == question[1]) strike++;
-			if (guessNumber[2] == question[2]) strike++;
+		return { false, getStrikeCount(guessNumber), getBallCount(guessNumber) };
+	}
 
-			if (guessNumber[0] == question[1] || guessNumber[0] == question[2]) ball++;
-			if (guessNumber[1] == question[0] || guessNumber[1] == question[2]) ball++;
-			if (guessNumber[2] == question[0] || guessNumber[0] == question[1]) ball++;
+	int getBallCount(const std::string& guessNumber)
+	{
+		int ball = 0;
+		if (guessNumber[0] == question[1] || guessNumber[0] == question[2]) ball++;
+		if (guessNumber[1] == question[0] || guessNumber[1] == question[2]) ball++;
+		if (guessNumber[2] == question[0] || guessNumber[0] == question[1]) ball++;
+		return ball;
+	}
 
-			return { false, strike, ball };
-		}
-
-		return { false, 0, 0 };
+	int getStrikeCount(const std::string& guessNumber)
+	{
+		int strike = 0;
+		if (guessNumber[0] == question[0]) strike++;
+		if (guessNumber[1] == question[1]) strike++;
+		if (guessNumber[2] == question[2]) strike++;
+		return strike;
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
