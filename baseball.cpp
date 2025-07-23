@@ -8,6 +8,14 @@ struct GuessResult {
 	bool solved;
 	int strikes;
 	int balls;
+	bool operator==(const GuessResult &st1) {
+		if ((this->solved == st1.solved)
+			&& (this->strikes == st1.strikes)
+			&& (this->balls == st1.balls))
+			return true;
+		else
+			return false;
+	}
 };
 
 class Baseball {
@@ -16,10 +24,16 @@ public:
 
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		if (guessNumber == question) {
-			return { true, 3, 0 };
-		}
-		return { false, getStrikeCount(guessNumber), getBallCount(guessNumber) };
+
+		return { isCorrectAnswer(guessNumber), 
+				 getStrikeCount(guessNumber), 
+			 	 getBallCount(guessNumber) 
+			   };
+	}
+
+	bool isCorrectAnswer(const std::string& guessNumber)
+	{
+		return guessNumber == question;
 	}
 
 	int getBallCount(const std::string& guessNumber)
@@ -57,9 +71,9 @@ public:
 
 	bool isDuplicatedNumber(const std::string& guessNumber)
 	{
-		return guessNumber[0] == guessNumber[1] ||
+		return (guessNumber[0] == guessNumber[1] ||
 			guessNumber[0] == guessNumber[2] ||
-			guessNumber[1] == guessNumber[2];
+			guessNumber[1] == guessNumber[2]);
 	}
 
 private: 
